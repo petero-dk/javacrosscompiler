@@ -6,6 +6,9 @@ echo %path%|find /i "%START%tools">nul  || set PATH=%START%tools;%PATH%
 if not exist %START%tmp\ mkdir %START%tmp
 :: rmdir /s /Q %START%tmp\
 
+if exist %START%logs\ rmdir /s /Q %START%logs\
+mkdir %START%logs\
+
 for /f tokens^=2-5^ delims^=.-_^" %%j in ('javac -fullversion 2^>^&1') do set "jver=%%j%%k"
 echo Found java version %jver%
 
@@ -13,7 +16,7 @@ echo Found java version %jver%
 IF "%JAVA8_HOME%" EQU "" ( 
     echo Getting Java 8
     if not exist "%START%tmp\java18.zip" wget "https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u222-b10/OpenJDK8U-jdk_x86-32_windows_hotspot_8u222b10.zip" -O "%START%tmp\java18.zip" > log.log
-    if not exist "%START%tmp\java18\" call 7za x "%START%tmp\java18.zip" -spe -bd -y -o"%START%tmp\java18\" > log.log
+    if not exist "%START%tmp\java18\" call 7za x "%START%tmp\java18.zip" -spe -bd -y -o"%START%tmp\java18\" > logs\prepare.log
     set JAVA8_HOME=%START%tmp\java18\jdk8u222-b10
 )
 
@@ -21,7 +24,7 @@ IF "%JAVA8_HOME%" EQU "" (
 IF "%JAVA11_HOME%" EQU "" ( 
     echo Getting Java 11
     if not exist "%START%tmp\java110.zip" wget "https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.4%%2B11/OpenJDK11U-jdk_x86-32_windows_hotspot_11.0.4_11.zip" -O "%START%tmp\java110.zip"  > log.log
-    if not exist "%START%tmp\java110\" call 7za x "%START%tmp\java110.zip" -spe -bd -y -o"%START%tmp\java110\"  > log.log
+    if not exist "%START%tmp\java110\" call 7za x "%START%tmp\java110.zip" -spe -bd -y -o"%START%tmp\java110\"  > logs\prepare.log
     set JAVA11_HOME=%START%tmp\java110\jdk-11.0.4+11
 )
 
@@ -34,8 +37,8 @@ IF %jver% NEQ 18 (
 :: INSTALL DEPOT TOOLS FOR WINDOWS
 if not exist %START%tmp\depot_tools\ (
     echo Getting Depot Tools
-    wget https://storage.googleapis.com/chrome-infra/depot_tools.zip -P %START%tmp\ > log.log
-    7za x "%START%tmp\depot_tools.zip" -bd -y -o"%START%tmp\depot_tools\"  > log.log
+    wget https://storage.googleapis.com/chrome-infra/depot_tools.zip -P %START%tmp\ > logs\prepare.log
+    7za x "%START%tmp\depot_tools.zip" -bd -y -o"%START%tmp\depot_tools\"  > logs\prepare.log
 )
 echo %path%|find /i "%START%tmp\depot_tools">nul  || set PATH=%START%tmp\depot_tools;%PATH%
 
@@ -43,7 +46,7 @@ echo %path%|find /i "%START%tmp\depot_tools">nul  || set PATH=%START%tmp\depot_t
 :: INSTALL R8
 if not exist %START%tmp\r8\ (
     echo Getting R8
-    call git clone https://r8.googlesource.com/r8 "%START%tmp\r8" > log.log
+    call git clone https://r8.googlesource.com/r8 "%START%tmp\r8" > logs\prepare.log
     REM Google is missing dependencies in their maven mirror
     fart -q "%START%tmp\r8\build.gradle" "http://storage.googleapis.com/r8-deps/maven_mirror/" "https://repo1.maven.org/maven2/" 
 )
