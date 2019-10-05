@@ -51,8 +51,8 @@ cd %START%
 call downpile.bat "%START%source\calimero-rxtx\build\libs\calimero-rxtx-%VERSION%.jar" --lib "%START%tmp\nrjavaserial-3.15.0.jar" %_result% 
 cd %START%
 
-
-EXIT /B 0
+GOTO :EOF
+::EXIT /B 0
 
 :BUILDCALIMERO
     SETLOCAL
