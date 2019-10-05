@@ -46,7 +46,7 @@ IF "%JAVA8_HOME%" EQU "" (
     echo Downloading Java 8
     if not exist "%START%tmp\java18.zip" wget -nv -O "%START%tmp\java18.zip" "https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u222-b10/OpenJDK8U-jdk_x86-32_windows_hotspot_8u222b10.zip" 
     echo Extracting Java 8
-    if not exist "%START%tmp\java18\" call 7za x "%START%tmp\java18.zip" -spe -bd -y -o"%START%tmp\java18\"  | FIND /V "ing  "
+    if not exist "%START%tmp\java18\" call 7za x "%START%tmp\java18.zip" -spe -bd -y -o"%START%tmp\java18\"  | %SYSTEMROOT%\system32\FIND /V "ing  "
     set JAVA8_HOME=%START%tmp\java18\jdk8u222-b10
     echo.
 )
@@ -63,7 +63,7 @@ IF "%JAVA11_HOME%" EQU "" (
     echo Downloading Java 11
     if not exist "%START%tmp\java110.zip" wget -nv -O "%START%tmp\java110.zip" "https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.4%%2B11/OpenJDK11U-jdk_x86-32_windows_hotspot_11.0.4_11.zip"
     echo Extracting Java 11
-    if not exist "%START%tmp\java110\" call 7za x "%START%tmp\java110.zip" -spe -bd -y -o"%START%tmp\java110\" | FIND /V "ing  "
+    if not exist "%START%tmp\java110\" call 7za x "%START%tmp\java110.zip" -spe -bd -y -o"%START%tmp\java110\" | %SYSTEMROOT%\system32\FIND /V "ing  "
     set JAVA11_HOME=%START%tmp\java110\jdk-11.0.4+11
 )
 IF ERRORLEVEL 1 (
@@ -87,7 +87,7 @@ if not exist %START%tmp\depot_tools\ (
     echo.
     echo Downloading Depot Tools
     wget -nv  -P %START%tmp\ https://storage.googleapis.com/chrome-infra/depot_tools.zip
-    7za x "%START%tmp\depot_tools.zip" -spe -bd -y -o"%START%tmp\depot_tools\" | FIND /V "ing  "
+    7za x "%START%tmp\depot_tools.zip" -spe -bd -y -o"%START%tmp\depot_tools\" | %SYSTEMROOT%\system32\FIND /V "ing  "
 )
 IF ERRORLEVEL 1 (
     echo [31m[FAILURE][0m Could not get Depot Tools

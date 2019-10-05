@@ -40,6 +40,22 @@ FOR /f "tokens=* delims=(=" %%G IN ('where %app%') DO (
     set FOUNDJAVAS=%FOUNDJAVAS% "!JAVAMAJOR!;!home!" "!JAVAMAJOR!!JAVAMINOR!;!home!"
 )
 IF "%MODE%"=="verbose" echo Done searching for %app%
+
+SET CUSTOMLOCATIONS="C:\Program Files\Java\" 
+for %%C in (%CUSTOMLOCATIONS%) do ( 
+    for /R %%C %F in (%app%) do (
+        IF EXIST %%F (
+            set bin=%%~dpF
+            set home=!bin:\bin=!
+            call :GETJAVAVERSION "%%F"
+            IF "%MODE%"=="verbose" echo Found Java !JAVAMAJOR!.!JAVAMINOR! in !home!
+            :: Create one veriable to hold all found paths
+            set FOUNDJAVAS=!FOUNDJAVAS! "!JAVAMAJOR!;!home!" "!JAVAMAJOR!!JAVAMINOR!;!home!"
+        )
+    )
+)
+
+
 :: Split the holding variable by space and then by ; and " in order to get version and path. 
 :: All on one line to utilize bat file line scoping and expansion
 endlocal & for %%V in (%FOUNDJAVAS%) do ( for /F delims^=^"^;^ tokens^=1-2 %%u in ('echo %%V') do ( set "JAVA%%u_HOME=%%v" ) )

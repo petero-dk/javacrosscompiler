@@ -1,6 +1,13 @@
 
 @echo off
 call prepare.bat
+echo.
+echo.
+echo.
+IF ERRORLEVEL 1 (
+    echo [31m[FAILURE][0m Failed to prepare
+    EXIT /B 1
+) ELSE echo [32m[SUCCESS][0m Completed preperation
 
 
 setlocal enabledelayedexpansion
@@ -12,12 +19,12 @@ set VERSION=2.5-SNAPSHOT
 for /f tokens^=2-5^ delims^=.-_^" %%j in ('javac -fullversion 2^>^&1') do set "jver=%%j%%k"
 
 echo Found java version %jver%
+
 IF %jver% NEQ 110 ( 
     echo Setting Java to Version 11
     set JAVA_HOME=%JAVA11_HOME%
+    set PATH=%JAVA_HOME%\bin;%PATH%
 ) 
-set JAVA_HOME=C:\Program Files\Zulu\zulu-11
-set PATH=%JAVA_HOME%\bin;%PATH%
 
 
 ::rmdir /S /Q out
