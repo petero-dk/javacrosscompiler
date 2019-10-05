@@ -12,6 +12,5 @@ pool:
 container: mcr.microsoft.com/windows/servercore:1803
 
 steps:
-- task: BatchScript@1
-  inputs:
-    filename: 'prepare.bat'
+- script: prepare.bat
+  displayName: 'Prepare'
