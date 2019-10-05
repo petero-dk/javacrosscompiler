@@ -39,11 +39,12 @@ FOR /f "tokens=* delims=(=" %%G IN ('where %app%') DO (
     :: Create one veriable to hold all found paths
     set FOUNDJAVAS=%FOUNDJAVAS% "!JAVAMAJOR!;!home!" "!JAVAMAJOR!!JAVAMINOR!;!home!"
 )
-IF "%MODE%"=="verbose" echo Done searching for %app%
 
 SET CUSTOMLOCATIONS="C:\Program Files\Java\" 
 for %%C in (%CUSTOMLOCATIONS%) do ( 
-    for /R %%C %F in (%app%) do (
+    IF "%MODE%"=="verbose" echo Searching for %app% in %%C
+
+    for /R "%%C" %%F in (%app%) do (
         IF EXIST %%F (
             set bin=%%~dpF
             set home=!bin:\bin=!
@@ -54,6 +55,8 @@ for %%C in (%CUSTOMLOCATIONS%) do (
         )
     )
 )
+
+IF "%MODE%"=="verbose" echo Done searching for %app%
 
 
 :: Split the holding variable by space and then by ; and " in order to get version and path. 
