@@ -38,6 +38,22 @@ mkdir %START%logs\
 
 call javas /v /jdk
 
+:: Download and prepare Java8
+cmd /c "exit /b 0"
+IF "%JAVA18_HOME%" EQU "" ( 
+    echo.
+    echo.
+    echo Downloading Java 8
+    if not exist "%START%tmp\java18.zip" wget --no-check-certificate -nv -O "%START%tmp\java18.zip" "https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u222-b10/OpenJDK8U-jdk_x86-32_windows_hotspot_8u222b10.zip" 
+    echo Extracting Java 8
+    if not exist "%START%tmp\java18\" call 7za x "%START%tmp\java18.zip" -spe -bd -y -o"%START%tmp\java18\"  | %SYSTEMROOT%\system32\FIND /V "ing  "
+    set JAVA18_HOME=%START%tmp\java18\jdk8u222-b10
+    echo.
+)
+IF ERRORLEVEL 1 (
+    echo [31m[FAILURE][0m Could not get Java 8
+    EXIT /B 1
+) ELSE echo [32m[SUCCESS][0m Installed Java 8
 
 :: Download and prepare Java11
 cmd /c "exit /b 0"
@@ -103,6 +119,7 @@ IF ERRORLEVEL 1 (
 :: This is non destructive and sets the error level to number of replacements.
 fart "%START%tmp\r8\build.gradle" "http://storage.googleapis.com/r8-deps/maven_mirror/" "https://repo1.maven.org/maven2/" 
 
+
 cmd /c "exit /b 0"
 if not exist %START%tmp\r8\build\libs\d8.jar (
     echo.
@@ -110,7 +127,7 @@ if not exist %START%tmp\r8\build\libs\d8.jar (
     echo Building R8
     cd %START%tmp\r8\
 
-    call %START%tmp\depot_tools\python "tools\gradle.py" d8 r8
+    call %START%tmp\depot_tools\python "tools\gradle.py" r8
     cd %START%
 )
 
