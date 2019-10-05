@@ -12,5 +12,8 @@ pool:
 container: mcr.microsoft.com/windows/servercore:1803
 
 steps:
-- script: prepare.bat
+- script: call prepare.bat
   displayName: 'Prepare'
+
+- script: call build_calimero.bat
+  displayName: 'Build Calimero Project'
