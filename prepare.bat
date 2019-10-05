@@ -44,7 +44,7 @@ IF "%JAVA18_HOME%" EQU "" (
     echo.
     echo.
     echo Downloading Java 8
-    if not exist "%START%tmp\java18.zip" wget -nv -O "%START%tmp\java18.zip" "https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u222-b10/OpenJDK8U-jdk_x86-32_windows_hotspot_8u222b10.zip" 
+    if not exist "%START%tmp\java18.zip" wget --no-check-certificate -nv -O "%START%tmp\java18.zip" "https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u222-b10/OpenJDK8U-jdk_x86-32_windows_hotspot_8u222b10.zip" 
     echo Extracting Java 8
     if not exist "%START%tmp\java18\" call 7za x "%START%tmp\java18.zip" -spe -bd -y -o"%START%tmp\java18\"  | %SYSTEMROOT%\system32\FIND /V "ing  "
     set JAVA18_HOME=%START%tmp\java18\jdk8u222-b10
@@ -61,7 +61,7 @@ IF "%JAVA11_HOME%" EQU "" (
     echo.
     echo.
     echo Downloading Java 11
-    if not exist "%START%tmp\java110.zip" wget -nv -O "%START%tmp\java110.zip" "https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.4%%2B11/OpenJDK11U-jdk_x86-32_windows_hotspot_11.0.4_11.zip"
+    if not exist "%START%tmp\java110.zip" wget --no-check-certificate -nv -O "%START%tmp\java110.zip" "https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.4%%2B11/OpenJDK11U-jdk_x86-32_windows_hotspot_11.0.4_11.zip"
     echo Extracting Java 11
     if not exist "%START%tmp\java110\" call 7za x "%START%tmp\java110.zip" -spe -bd -y -o"%START%tmp\java110\" | %SYSTEMROOT%\system32\FIND /V "ing  "
     set JAVA11_HOME=%START%tmp\java110\jdk-11.0.4+11
@@ -86,7 +86,7 @@ if not exist %START%tmp\depot_tools\ (
     echo.
     echo.
     echo Downloading Depot Tools
-    wget -nv  -P %START%tmp\ https://storage.googleapis.com/chrome-infra/depot_tools.zip
+    wget -nv --no-check-certificate -P %START%tmp\ https://storage.googleapis.com/chrome-infra/depot_tools.zip
     7za x "%START%tmp\depot_tools.zip" -spe -bd -y -o"%START%tmp\depot_tools\" | %SYSTEMROOT%\system32\FIND /V "ing  "
 
     REM UPDATE TOOLS?
