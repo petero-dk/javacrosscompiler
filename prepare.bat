@@ -38,22 +38,6 @@ mkdir %START%logs\
 
 call javas /v /jdk
 
-:: Download and prepare Java8
-cmd /c "exit /b 0"
-IF "%JAVA18_HOME%" EQU "" ( 
-    echo.
-    echo.
-    echo Downloading Java 8
-    if not exist "%START%tmp\java18.zip" wget --no-check-certificate -nv -O "%START%tmp\java18.zip" "https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u222-b10/OpenJDK8U-jdk_x86-32_windows_hotspot_8u222b10.zip" 
-    echo Extracting Java 8
-    if not exist "%START%tmp\java18\" call 7za x "%START%tmp\java18.zip" -spe -bd -y -o"%START%tmp\java18\"  | %SYSTEMROOT%\system32\FIND /V "ing  "
-    set JAVA18_HOME=%START%tmp\java18\jdk8u222-b10
-    echo.
-)
-IF ERRORLEVEL 1 (
-    echo [31m[FAILURE][0m Could not get Java 8
-    EXIT /B 1
-) ELSE echo [32m[SUCCESS][0m Installed Java 8
 
 :: Download and prepare Java11
 cmd /c "exit /b 0"
@@ -71,11 +55,11 @@ IF ERRORLEVEL 1 (
     EXIT /B 1
 ) ELSE echo [32m[SUCCESS][0m Installed Java 11
 
-IF "%jver%" NEQ "18" ( 
+IF "%jver%" NEQ "110" ( 
     echo.
     echo.
-    echo Setting Java to Version 8
-    set JAVA_HOME=%JAVA18_HOME%
+    echo Setting Java to Version 11
+    set JAVA_HOME=%JAVA11_HOME%
     echo %PATH:)=^)%|%SYSTEMROOT%\system32\find /i "%JAVA_HOME%\bin">nul || set path=%JAVA_HOME%\bin;%PATH:)=^)%
 ) 
 
@@ -118,13 +102,6 @@ IF ERRORLEVEL 1 (
 
 :: This is non destructive and sets the error level to number of replacements.
 fart "%START%tmp\r8\build.gradle" "http://storage.googleapis.com/r8-deps/maven_mirror/" "https://repo1.maven.org/maven2/" 
-
-
-:: If python is in path, use that
-where python
-
-call python -V
-call %START%tmp\depot_tools\python -V
 
 cmd /c "exit /b 0"
 if not exist %START%tmp\r8\build\libs\d8.jar (
@@ -176,8 +153,8 @@ echo %path%|%SYSTEMROOT%\system32\find /i "%START%tmp\dex-tools\dex-tools-2.1-SN
 
 
 
-
-EXIT /B 0
+echo EXIT
+REM EXIT /B 0
 
 
 
