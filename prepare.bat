@@ -123,6 +123,9 @@ fart "%START%tmp\r8\build.gradle" "http://storage.googleapis.com/r8-deps/maven_m
 :: If python is in path, use that
 where python
 
+call python -V
+call %START%tmp\depot_tools\python -V
+
 cmd /c "exit /b 0"
 if not exist %START%tmp\r8\build\libs\d8.jar (
     echo.
@@ -130,7 +133,7 @@ if not exist %START%tmp\r8\build\libs\d8.jar (
     echo Building R8
     cd %START%tmp\r8\
 
-    call vpython "tools\gradle.py" d8 r8
+    call %START%tmp\depot_tools\python "tools\gradle.py" d8 r8
     cd %START%
 )
 
