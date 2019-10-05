@@ -113,21 +113,31 @@ IF ERRORLEVEL 1 (
 :: This is non destructive and sets the error level to number of replacements.
 fart "%START%tmp\r8\build.gradle" "http://storage.googleapis.com/r8-deps/maven_mirror/" "https://repo1.maven.org/maven2/" 
 
+
+:: If python is in path, use that
+SET pythonorv=python
+where python
+IF ERRORLEVEL 1 (
+    SET pythonorv=python
+    echo [33m[WARNING][0m Could not find python in path, using vpython
+    EXIT /B 1
+) ELSE echo [32m[SUCCESS][0m Found python in path
+
 cmd /c "exit /b 0"
 if not exist %START%tmp\r8\build\libs\d8.jar (
     echo.
     echo.
     echo Building R8
     cd %START%tmp\r8\
-    call vpython tools\gradle.py d8 r8
+
+    call %pythonorv% "tools\gradle.py" d8 r8
     cd %START%
 )
-echo Had R8
 
-IF ERRORLEVEL 1 (
+if not exist %START%tmp\r8\build\libs\d8.jar (
     echo [31m[FAILURE][0m Could not build R8
     EXIT /B 1
-) ELSE echo [32m[SUCCESS][0m Built R8
+) ELSE echo [32m[SUCCESS][0m Found R8
 
 set R8=%START%tmp\r8\build\libs\r8.jar
 
@@ -164,6 +174,7 @@ echo %path%|%SYSTEMROOT%\system32\find /i "%START%tmp\dex-tools\dex-tools-2.1-SN
 
 
 
+EXIT /B 0
 
 
 
