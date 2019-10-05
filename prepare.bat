@@ -88,6 +88,12 @@ if not exist %START%tmp\depot_tools\ (
     echo Downloading Depot Tools
     wget -nv  -P %START%tmp\ https://storage.googleapis.com/chrome-infra/depot_tools.zip
     7za x "%START%tmp\depot_tools.zip" -spe -bd -y -o"%START%tmp\depot_tools\" | %SYSTEMROOT%\system32\FIND /V "ing  "
+
+    REM UPDATE TOOLS?
+
+    REM FOR NOW BOOTSTRAP THEM
+    echo Bootstrapping Depot Tools
+    call "%START%tmp\depot_tools\bootstrap\win_tools.bat"
 )
 IF ERRORLEVEL 1 (
     echo [31m[FAILURE][0m Could not get Depot Tools
@@ -115,13 +121,7 @@ fart "%START%tmp\r8\build.gradle" "http://storage.googleapis.com/r8-deps/maven_m
 
 
 :: If python is in path, use that
-SET pythonorv=python
 where python
-IF ERRORLEVEL 1 (
-    SET pythonorv=python
-    echo [33m[WARNING][0m Could not find python in path, using vpython
-    EXIT /B 1
-) ELSE echo [32m[SUCCESS][0m Found python in path
 
 cmd /c "exit /b 0"
 if not exist %START%tmp\r8\build\libs\d8.jar (
@@ -130,7 +130,7 @@ if not exist %START%tmp\r8\build\libs\d8.jar (
     echo Building R8
     cd %START%tmp\r8\
 
-    call %pythonorv% "tools\gradle.py" d8 r8
+    call python "tools\gradle.py" d8 r8
     cd %START%
 )
 

@@ -40,19 +40,19 @@ FOR /f "tokens=* delims=(=" %%G IN ('where %app%') DO (
     set FOUNDJAVAS=%FOUNDJAVAS% "!JAVAMAJOR!;!home!" "!JAVAMAJOR!!JAVAMINOR!;!home!"
 )
 
-SET CUSTOMLOCATIONS="C:\Program Files\Java\" 
+:: DO NOT PUT TRAILING SLASH!
+SET CUSTOMLOCATIONS="C:\Program Files\Java" "C:\Program Files\Zulu"
+
 for %%C in (%CUSTOMLOCATIONS%) do ( 
     IF "%MODE%"=="verbose" echo Searching for %app% in %%C
 
-    for /R "%%C" %%F in (%app%) do (
-        IF EXIST %%F (
-            set bin=%%~dpF
-            set home=!bin:\bin=!
-            call :GETJAVAVERSION "%%F"
-            IF "%MODE%"=="verbose" echo Found Java !JAVAMAJOR!.!JAVAMINOR! in !home!
-            :: Create one veriable to hold all found paths
-            set FOUNDJAVAS=!FOUNDJAVAS! "!JAVAMAJOR!;!home!" "!JAVAMAJOR!!JAVAMINOR!;!home!"
-        )
+    FOR /f "tokens=* delims=(=" %%G IN ('where /R %%C %app%') DO (
+        set bin=%%~dpG
+        set home=!bin:\bin=!
+        call :GETJAVAVERSION "%%G"
+        IF "%MODE%"=="verbose" echo Found Java !JAVAMAJOR!.!JAVAMINOR! in !home!
+        :: Create one veriable to hold all found paths
+        set FOUNDJAVAS=!FOUNDJAVAS! "!JAVAMAJOR!;!home!" "!JAVAMAJOR!!JAVAMINOR!;!home!"
     )
 )
 
