@@ -17,3 +17,8 @@ steps:
 
 - script: call build_calimero.bat
   displayName: 'Build Calimero Project'
+  
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Pipeline.Workspace)\out\calimero-core-2.5-SNAPSHOT.jar'
+    artifact: 'calimero-core-2.5-SNAPSHOT.jar'
