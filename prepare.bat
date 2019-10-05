@@ -130,7 +130,7 @@ if not exist %START%tmp\r8\build\libs\d8.jar (
     echo Building R8
     cd %START%tmp\r8\
 
-    call python "tools\gradle.py" d8 r8
+    call vpython "tools\gradle.py" d8 r8
     cd %START%
 )
 
