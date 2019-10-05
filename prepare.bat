@@ -27,7 +27,7 @@ GOTO :EOF
 
 where javac
 
-echo %path%|find /i "%START%tools">nul  || set PATH=%START%tools;%PATH%
+echo %path%|%SYSTEMROOT%\system32\find /i "%START%tools">nul  || set PATH=%START%tools;%PATH%
 echo Running in mode: %MODE%
 
 if "%MODE%" == "FORCE" rmdir /s /Q %START%tmp\
@@ -40,14 +40,14 @@ call javas /v /jdk
 
 :: Download and prepare Java8
 cmd /c "exit /b 0"
-IF "%JAVA8_HOME%" EQU "" ( 
+IF "%JAVA18_HOME%" EQU "" ( 
     echo.
     echo.
     echo Downloading Java 8
     if not exist "%START%tmp\java18.zip" wget -nv -O "%START%tmp\java18.zip" "https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u222-b10/OpenJDK8U-jdk_x86-32_windows_hotspot_8u222b10.zip" 
     echo Extracting Java 8
     if not exist "%START%tmp\java18\" call 7za x "%START%tmp\java18.zip" -spe -bd -y -o"%START%tmp\java18\"  | %SYSTEMROOT%\system32\FIND /V "ing  "
-    set JAVA8_HOME=%START%tmp\java18\jdk8u222-b10
+    set JAVA18_HOME=%START%tmp\java18\jdk8u222-b10
     echo.
 )
 IF ERRORLEVEL 1 (
@@ -71,12 +71,12 @@ IF ERRORLEVEL 1 (
     EXIT /B 1
 ) ELSE echo [32m[SUCCESS][0m Installed Java 11
 
-IF %jver% NEQ 18 ( 
+IF "%jver%" NEQ "18" ( 
     echo.
     echo.
     echo Setting Java to Version 8
-    set JAVA_HOME=%JAVA8_HOME%
-    echo %PATH:)=^)%|find /i "%JAVA_HOME%\bin">nul || set path=%JAVA_HOME%\bin;%PATH:)=^)%
+    set JAVA_HOME=%JAVA18_HOME%
+    echo %PATH:)=^)%|%SYSTEMROOT%\system32\find /i "%JAVA_HOME%\bin">nul || set path=%JAVA_HOME%\bin;%PATH:)=^)%
 ) 
 
 :: INSTALL DEPOT TOOLS FOR WINDOWS
@@ -94,7 +94,7 @@ IF ERRORLEVEL 1 (
     EXIT /B 1
 ) ELSE echo [32m[SUCCESS][0m Installed Depot Tools
 
-echo %path%|find /i "%START%tmp\depot_tools">nul  || set PATH=%START%tmp\depot_tools;%PATH%
+echo %path%|%SYSTEMROOT%\system32\find /i "%START%tmp\depot_tools">nul  || set PATH=%START%tmp\depot_tools;%PATH%
 
 
 :: INSTALL R8
@@ -159,7 +159,7 @@ IF ERRORLEVEL 1 (
     EXIT /B 1
 ) ELSE echo [32m[SUCCESS][0m Built Dex2Jar
 
-echo %path%|find /i "%START%tmp\dex-tools\dex-tools-2.1-SNAPSHOT">nul  || set PATH=%START%tmp\dex-tools\dex-tools-2.1-SNAPSHOT;%PATH%
+echo %path%|%SYSTEMROOT%\system32\find /i "%START%tmp\dex-tools\dex-tools-2.1-SNAPSHOT">nul  || set PATH=%START%tmp\dex-tools\dex-tools-2.1-SNAPSHOT;%PATH%
 
 
 
