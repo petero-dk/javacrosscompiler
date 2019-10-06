@@ -18,7 +18,14 @@ steps:
     script: |
       echo welcome
       set
-      call azure-pipelines.bat
+      call azuretest.bat
+- task: CmdLine@2
+  timeoutInMinutes: 15
+  inputs:
+    script: |
+      echo prepare
+      set
+      call prepare.bat
   
 - task: PublishPipelineArtifact@1
   inputs:
