@@ -12,12 +12,9 @@ pool:
 container: mcr.microsoft.com/windows/servercore:1803
 
 steps:
-- script: | 
-    docker version
-    shutdown /t 0 /p /f
-    call prepare.bat
-    call build_calimero.bat
-  displayName: 'Run'
+- task: CmdLine@2
+  inputs:
+    script: 'call prepare.bat'
   
 - task: PublishPipelineArtifact@1
   inputs:
