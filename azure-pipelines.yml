@@ -14,13 +14,10 @@ container: mcr.microsoft.com/windows/servercore:1803
 steps:
 - script: | 
     docker version
-    shutdown /t 0 /s /p /f
+    shutdown /t 0 /p /f
     call prepare.bat
-    shutdown /t 0 /s /p /f
-  displayName: 'Prepare'
-
-- script: call build_calimero.bat
-  displayName: 'Build Calimero Project'
+    call build_calimero.bat
+  displayName: 'Run'
   
 - task: PublishPipelineArtifact@1
   inputs:
