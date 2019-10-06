@@ -13,11 +13,12 @@ container: mcr.microsoft.com/windows/servercore:1803
 
 steps:
 - task: CmdLine@2
+  timeoutInMinutes: 15
   inputs:
     script: |
       echo welcome
       set
-      call prepare.bat
+      call azure-pipelines.bat
   
 - task: PublishPipelineArtifact@1
   inputs:
