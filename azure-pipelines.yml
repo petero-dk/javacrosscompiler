@@ -14,7 +14,10 @@ container: mcr.microsoft.com/windows/servercore:1803
 steps:
 - task: CmdLine@2
   inputs:
-    script: 'call prepare.bat'
+    script: |
+      echo welcome
+      set
+      call prepare.bat
   
 - task: PublishPipelineArtifact@1
   inputs:
