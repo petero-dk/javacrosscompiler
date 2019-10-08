@@ -98,6 +98,8 @@ GOTO :EOF
         EXIT /B 1
     ) ELSE echo [32m[SUCCESS][0m Cloned %PROJECT%
 
+    if "%PROJECT" EQU "calimero-rxrx" fart --c-style "source\calimero-rxtx\build.gradle" "mavenLocal()" "flatDir { dirs '../calimero-core/build/libs'  }\r\n   mavenLocal()"
+
     cd "%START%source/%PROJECT%"
     call gradlew build -x test
     IF ERRORLEVEL 1 (
