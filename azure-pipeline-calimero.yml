@@ -27,7 +27,6 @@ steps:
   inputs:
     script: |
       echo Pre build
-      set
       call build_calimero.bat
   
 - task: PublishPipelineArtifact@1
