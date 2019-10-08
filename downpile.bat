@@ -21,8 +21,8 @@ setlocal enabledelayedexpansion
     if exist "%THIS%opt\%PROJECT%\" rmdir /s /Q "%THIS%opt\%PROJECT%\"
     mkdir %THIS%opt\%PROJECT%
     echo Desugaring: %PROJECT%
-    echo java -jar "%R8%" --lib "%JAVA8_HOME%\jre\lib\rt.jar" %CP% --output %THIS%opt\%PROJECT%\ --pg-conf "%THIS%keepall.txt" --no-tree-shaking --no-minification "%INPUT%"
-    java -jar "%R8%" --lib "%JAVA8_HOME%\jre\lib\rt.jar" %CP% --output %THIS%opt\%PROJECT%\ --pg-conf "%THIS%keepall.txt" --no-tree-shaking --no-minification "%INPUT%"
+    echo java -jar "%R8%" --lib "%JAVA18_HOME%\jre\lib\rt.jar" %CP% --output %THIS%opt\%PROJECT%\ --pg-conf "%THIS%keepall.txt" --no-tree-shaking --no-minification "%INPUT%"
+    java -jar "%R8%" --lib "%JAVA18_HOME%\jre\lib\rt.jar" %CP% --output %THIS%opt\%PROJECT%\ --pg-conf "%THIS%keepall.txt" --no-tree-shaking --no-minification "%INPUT%"
 
     IF ERRORLEVEL 1 (
         echo [31m[FAILURE][0m Desugaring failed (%ERRORLEVEL%)

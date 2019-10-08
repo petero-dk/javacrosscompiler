@@ -2,9 +2,10 @@
 @echo off
 
 ::In order to not have to run prepare again
-set PATH=%TOOLSPATH%;%PATH%
+IF "%TOOLSPATH%"=="" ( call prepare.bat ) else set PATH=%TOOLSPATH%;%PATH%
+
 :: To set env variables explicitly
-call prepare.bat
+
 
 echo Build Calimero Project to Java 8
 
@@ -23,9 +24,6 @@ IF "%jver%" NEQ "110" (
     set JAVA_HOME=%JAVA11_HOME%
     set path=%JAVA11_HOME%\bin;%PATH:)=^)%
 ) 
-echo %JAVA_HOME%
-echo %PATH%
-javac -version
 
 ::rmdir /S /Q out
 
