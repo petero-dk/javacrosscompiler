@@ -1,6 +1,9 @@
 
 @echo off
 
+:: To set env variables explicitly
+call prepare.bat
+
 echo Build Calimero Project to Java 8
 
 setlocal enabledelayedexpansion

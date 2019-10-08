@@ -65,7 +65,10 @@ IF "%JAVA11_HOME%" EQU "" (
     echo Extracting Java 11
     if not exist "%START%tmp\java110\" call 7za x "%START%tmp\java110.zip" -spe -bd -y -o"%START%tmp\java110\" | %SYSTEMROOT%\system32\FIND /V "ing  "
     set JAVA11_HOME=%START%tmp\java110\jdk-11.0.4+11
-    set JAVA110_HOME=%START%tmp\java110\jdk-11.0.4+11
+    set JAVA110_HOME=%START%tmp\java110\jdk-11.0.4+
+    echo ##vso[task.setvariable variable=JAVA11_HOME]%JAVA11_HOME%
+    echo ##vso[task.setvariable variable=JAVA110_HOME]%JAVA110_HOME%
+
     echo.
 )
 IF ERRORLEVEL 1 (
@@ -171,9 +174,6 @@ IF ERRORLEVEL 1 (
 
 echo %path%|%SYSTEMROOT%\system32\find /i "%START%tmp\dex-tools\dex-tools-2.1-SNAPSHOT">nul  || set PATH=%START%tmp\dex-tools\dex-tools-2.1-SNAPSHOT;%PATH%
 
-
-
-echo EXIT
 EXIT /B 0
 
 
