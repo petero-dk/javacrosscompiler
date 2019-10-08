@@ -12,22 +12,25 @@ pool:
 container: mcr.microsoft.com/windows/servercore:1803
 
 steps:
-- task: CmdLine@2
+- task: CmdLine@2  
+  displayName: Prepare build environment 
+  name: prepare
   timeoutInMinutes: 15
   inputs:
     script: |
-      echo welcome
-      set
-      call azuretest.bat
-- task: CmdLine@2
-  timeoutInMinutes: 15
-  inputs:
-    script: |
-      echo prepare
-      set
       call prepare.bat
+
+- task: CmdLine@2
+  displayName: Build Calimero Project
+  name: build-calimero
+  timeoutInMinutes: 15
+  inputs:
+    script: |
+      call build_calimero.bat
   
 - task: PublishPipelineArtifact@1
+  displayName: Publish Calimero Project
+  name: publish-calimero
   inputs:
     targetPath: '$(Pipeline.Workspace)\out\calimero-core-2.5-SNAPSHOT.jar'
     artifact: 'calimero-core-2.5-SNAPSHOT.jar'
