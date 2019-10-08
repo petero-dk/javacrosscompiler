@@ -65,17 +65,18 @@ IF "%JAVA11_HOME%" EQU "" (
     echo Extracting Java 11
     if not exist "%START%tmp\java110\" call 7za x "%START%tmp\java110.zip" -spe -bd -y -o"%START%tmp\java110\" | %SYSTEMROOT%\system32\FIND /V "ing  "
     set JAVA11_HOME=%START%tmp\java110\jdk-11.0.4+11
+    set JAVA110_HOME=%START%tmp\java110\jdk-11.0.4+11
 )
 IF ERRORLEVEL 1 (
     echo [31m[FAILURE][0m Could not get Java 11
     EXIT /B 1
 ) ELSE echo [32m[SUCCESS][0m Installed Java 11
 
-IF "%jver%" NEQ "110" ( 
+IF "%jver%" NEQ "18" ( 
     echo.
     echo.
-    echo Setting Java to Version 11
-    set JAVA_HOME=%JAVA11_HOME%
+    echo Setting Java to Version 1.8
+    set JAVA_HOME=%JAVA18_HOME%
     echo %PATH:)=^)%|%SYSTEMROOT%\system32\find /i "%JAVA_HOME%\bin">nul || set path=%JAVA_HOME%\bin;%PATH:)=^)%
 ) 
 
