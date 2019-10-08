@@ -25,7 +25,7 @@ setlocal enabledelayedexpansion
     java -jar "%R8%" --lib "%JAVA8_HOME%\jre\lib\rt.jar" %CP% --output %THIS%opt\%PROJECT%\ --pg-conf "%THIS%keepall.txt" --no-tree-shaking --no-minification "%INPUT%" >> "%THIS%logs\r8.%PROJECT%.log" 2>&1
 
     IF ERRORLEVEL 1 (
-        echo Desugaring failed
+        echo [31m[FAILURE][0m Desugaring failed
         EXIT /B 1
     )
 
@@ -34,7 +34,7 @@ setlocal enabledelayedexpansion
     call d2j-dex2jar.bat -f --output "%THIS%out\%PROJECT%.jar" "%THIS%opt\%PROJECT%\classes.dex" > %THIS%logs\dj2.%PROJECT%.log 2>&1
 
     IF ERRORLEVEL 1 (
-        echo Repacking failed
+        echo [31m[FAILURE][0m Repacking failed
         EXIT /B 1
     )
   ::  cd out\%PROJECT%
