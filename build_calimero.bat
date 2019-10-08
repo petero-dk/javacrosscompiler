@@ -1,15 +1,15 @@
 
 @echo off
 
-::In order to not have to run prepare again
-IF "%TOOLSPATH%"=="" ( call prepare.bat ) else set PATH=%TOOLSPATH%;%PATH%
-
-:: To set env variables explicitly
-
 
 echo Build Calimero Project to Java 8
 
 setlocal enabledelayedexpansion
+::In order to not have to run prepare again
+:: To set env variables explicitly
+IF "%TOOLSPATH%"=="" ( call prepare.bat ) else set PATH=%TOOLSPATH%;%PATH%
+
+if not exist "%START%out/calimero" mkdir "%START%out/calimero"
 
 set START=%~dp0
 
@@ -35,7 +35,6 @@ IF ERRORLEVEL 1 (
 cd %START%
 call 7za x "%START%source\calimero-core\build\distributions\calimero-core-%VERSION%.zip" -spe -bd -y -o"%START%source\calimero-core\build\distributions\"
 call downpile.bat "%START%source\calimero-core\build\distributions\calimero-core-%VERSION%\lib\calimero-core-%VERSION%.jar"
-echo %_result%
 
 cd %START%
 
@@ -81,6 +80,7 @@ IF ERRORLEVEL 1 (
     EXIT /B 1
 ) ELSE echo [32m[SUCCESS][0m Downpiled calimero-rxtx
 
+move "%START%out\calimero*" "%START%out\calimero\"
 
 GOTO :EOF
 ::EXIT /B 0
