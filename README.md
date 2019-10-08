@@ -2,6 +2,11 @@
 Cross compile newer versions of Java (i.e. 11) to Java8 (and earlier)
 
 
+
+|   Project	|  Download |   Status	|
+|---	|---	| ---	|
+|   Calimero Project (Core, Device, RXTX)	|  comming  |   [![Build Status](https://zealofzebras.visualstudio.com/openHAB/_apis/build/status/javacrosscompiler-calimero-ci?branchName=master)](https://zealofzebras.visualstudio.com/openHAB/_build/latest?definitionId=42&branchName=master)	|
+
 ## usage
 
 Run `downpile.bat` existing.jar
