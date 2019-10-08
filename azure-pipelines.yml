@@ -30,7 +30,7 @@ steps:
   
 - task: PublishPipelineArtifact@1
   displayName: Publish Calimero Project
-  name: publish-calimero
+  name: publish_calimero
   inputs:
     targetPath: '$(Pipeline.Workspace)\out\calimero-core-2.5-SNAPSHOT.jar'
     artifact: 'calimero-core-2.5-SNAPSHOT.jar'
