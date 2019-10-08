@@ -132,7 +132,7 @@ if not exist %START%tmp\r8\build\libs\d8.jar (
     cd %START%
 )
 
-if not exist %START%tmp\r8\build\libs\d8.jar (
+if not exist %START%tmp\r8\build\libs\r8.jar (
     echo [31m[FAILURE][0m Could not build R8
     EXIT /B 1
 ) ELSE echo [32m[SUCCESS][0m Found R8
