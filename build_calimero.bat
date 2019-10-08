@@ -35,6 +35,7 @@ IF ERRORLEVEL 1 (
 cd %START%
 call 7za x "%START%source\calimero-core\build\distributions\calimero-core-%VERSION%.zip" -spe -bd -y -o"%START%source\calimero-core\build\distributions\"
 call downpile.bat "%START%source\calimero-core\build\distributions\calimero-core-%VERSION%\lib\calimero-core-%VERSION%.jar"
+echo %_result%
 
 cd %START%
 
@@ -90,8 +91,8 @@ GOTO :EOF
     SET VERSION=%2
     echo Building: %PROJECT%-%VERSION%
         
-    rmdir /S /Q "%START%source/%PROJECT%"
-    call git clone --quiet https://github.com/calimero-project/%PROJECT%.git "%START%source/%PROJECT%"
+    :: if exist "%START%source/%PROJECT%" rmdir /S /Q "%START%source/%PROJECT%"
+    if not exist "%START%source/%PROJECT%" call git clone --quiet https://github.com/calimero-project/%PROJECT%.git "%START%source/%PROJECT%"
     IF ERRORLEVEL 1 (
         echo [31m[FAILURE][0m Could not clone %PROJECT%
         EXIT /B 1

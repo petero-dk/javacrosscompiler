@@ -25,7 +25,7 @@ setlocal enabledelayedexpansion
     java -jar "%R8%" --lib "%JAVA18_HOME%\jre\lib\rt.jar" %CP% --output %THIS%opt\%PROJECT%\ --pg-conf "%THIS%keepall.txt" --no-tree-shaking --no-minification "%INPUT%"
 
     IF ERRORLEVEL 1 (
-        echo [31m[FAILURE][0m Desugaring failed (%ERRORLEVEL%)
+        echo [31m[FAILURE][0m Desugaring failed ^( %ERRORLEVEL% ^)
         EXIT /B 1
     )
 
@@ -41,5 +41,5 @@ setlocal enabledelayedexpansion
   ::  ..\..\tools\7z\7za.exe a  ..\%PROJECT%.jar META-INF\
   ::  ..\..\tools\7z\7za.exe a  ..\%PROJECT%.jar properties.xml
   ::  cd ..\..
-
+  
 ENDLOCAL & SET _result=%CP%
