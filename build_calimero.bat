@@ -1,13 +1,5 @@
 
 @echo off
-call prepare.bat
-echo.
-echo.
-echo.
-IF ERRORLEVEL 1 (
-    echo [31m[FAILURE][0m Failed to prepare
-    EXIT /B 1
-) ELSE echo [32m[SUCCESS][0m Completed preperation
 
 
 setlocal enabledelayedexpansion
@@ -20,7 +12,7 @@ for /f tokens^=2-5^ delims^=.-_^" %%j in ('javac -fullversion 2^>^&1') do set "j
 
 echo Found java version %jver%
 
-IF %jver% NEQ 110 ( 
+IF "%jver%" NEQ "110" ( 
     echo Setting Java to Version 11
     set JAVA_HOME=%JAVA11_HOME%
     set PATH=%JAVA_HOME%\bin;%PATH%
