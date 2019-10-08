@@ -22,7 +22,7 @@ steps:
 
 - task: CmdLine@2
   displayName: Build Calimero Project
-  name: build-calimero
+  name: build_calimero
   timeoutInMinutes: 15
   inputs:
     script: |
