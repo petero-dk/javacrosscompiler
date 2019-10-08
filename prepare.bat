@@ -28,6 +28,8 @@ GOTO :EOF
 where javac
 
 echo %path%|%SYSTEMROOT%\system32\find /i "%START%tools">nul  || set PATH=%START%tools;%PATH%
+set TOOLSPATH=%START%tools
+
 echo Running in mode: %MODE%
 
 if "%MODE%" == "FORCE" rmdir /s /Q %START%tmp\
@@ -66,8 +68,6 @@ IF "%JAVA11_HOME%" EQU "" (
     if not exist "%START%tmp\java110\" call 7za x "%START%tmp\java110.zip" -spe -bd -y -o"%START%tmp\java110\" | %SYSTEMROOT%\system32\FIND /V "ing  "
     set JAVA11_HOME=%START%tmp\java110\jdk-11.0.4+11
     set JAVA110_HOME=%START%tmp\java110\jdk-11.0.4+
-    echo ##vso[task.setvariable variable=JAVA11_HOME]%JAVA11_HOME%
-    echo ##vso[task.setvariable variable=JAVA110_HOME]%JAVA110_HOME%
 
     echo.
 )
@@ -106,6 +106,7 @@ IF ERRORLEVEL 1 (
 ) ELSE echo [32m[SUCCESS][0m Installed Depot Tools
 
 echo %path%|%SYSTEMROOT%\system32\find /i "%START%tmp\depot_tools">nul  || set PATH=%START%tmp\depot_tools;%PATH%
+set TOOLSPATH=%START%tmp\depot_tools;%TOOLSPATH%
 
 
 :: INSTALL R8
@@ -173,6 +174,18 @@ IF ERRORLEVEL 1 (
 ) ELSE echo [32m[SUCCESS][0m Built Dex2Jar
 
 echo %path%|%SYSTEMROOT%\system32\find /i "%START%tmp\dex-tools\dex-tools-2.1-SNAPSHOT">nul  || set PATH=%START%tmp\dex-tools\dex-tools-2.1-SNAPSHOT;%PATH%
+set TOOLSPATH=%START%tmp\dex-tools\dex-tools-2.1-SNAPSHOT;%TOOLSPATH%
+
+
+:: FOR AZURE CI
+echo ##vso[task.setvariable variable=JAVA11_HOME]%JAVA11_HOME%
+echo ##vso[task.setvariable variable=JAVA110_HOME]%JAVA110_HOME%
+echo ##vso[task.setvariable variable=JAVA18_HOME]%JAVA18_HOME%
+echo ##vso[task.setvariable variable=R8]%R8%
+echo ##vso[task.setvariable variable=GRADLE_OPTS]%GRADLE_OPTS%
+echo ##vso[task.setvariable variable=TOOLSPATH]%TOOLSPATH%
+
+
 
 EXIT /B 0
 

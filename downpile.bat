@@ -21,17 +21,17 @@ setlocal enabledelayedexpansion
     if exist "%THIS%opt\%PROJECT%\" rmdir /s /Q "%THIS%opt\%PROJECT%\"
     mkdir %THIS%opt\%PROJECT%
     echo Desugaring: %PROJECT%
-    echo java -jar "%R8%" --lib "%JAVA8_HOME%\jre\lib\rt.jar" %CP% --output %THIS%opt\%PROJECT%\ --pg-conf "%THIS%keepall.txt" --no-tree-shaking --no-minification "%INPUT%" >> "%THIS%logs\r8.%PROJECT%.log" 2>&1
-    java -jar "%R8%" --lib "%JAVA8_HOME%\jre\lib\rt.jar" %CP% --output %THIS%opt\%PROJECT%\ --pg-conf "%THIS%keepall.txt" --no-tree-shaking --no-minification "%INPUT%" >> "%THIS%logs\r8.%PROJECT%.log" 2>&1
+    echo java -jar "%R8%" --lib "%JAVA8_HOME%\jre\lib\rt.jar" %CP% --output %THIS%opt\%PROJECT%\ --pg-conf "%THIS%keepall.txt" --no-tree-shaking --no-minification "%INPUT%"
+    java -jar "%R8%" --lib "%JAVA8_HOME%\jre\lib\rt.jar" %CP% --output %THIS%opt\%PROJECT%\ --pg-conf "%THIS%keepall.txt" --no-tree-shaking --no-minification "%INPUT%"
 
     IF ERRORLEVEL 1 (
-        echo [31m[FAILURE][0m Desugaring failed
+        echo [31m[FAILURE][0m Desugaring failed (%ERRORLEVEL%)
         EXIT /B 1
     )
 
     echo Repacking: %PROJECT%
     if exist "%THIS%out\%PROJECT%.jar" del "%THIS%out\%PROJECT%.jar"
-    call d2j-dex2jar.bat -f --output "%THIS%out\%PROJECT%.jar" "%THIS%opt\%PROJECT%\classes.dex" > %THIS%logs\dj2.%PROJECT%.log 2>&1
+    call d2j-dex2jar.bat -f --output "%THIS%out\%PROJECT%.jar" "%THIS%opt\%PROJECT%\classes.dex"
 
     IF ERRORLEVEL 1 (
         echo [31m[FAILURE][0m Repacking failed

@@ -1,6 +1,8 @@
 
 @echo off
 
+::In order to not have to run prepare again
+set PATH=%TOOLSPATH%;%PATH%
 :: To set env variables explicitly
 call prepare.bat
 
@@ -33,7 +35,7 @@ IF ERRORLEVEL 1 (
     EXIT /B 1
 ) ELSE echo [32m[SUCCESS][0m Build calimero-core
 cd %START%
-call 7za x "%START%source\calimero-core\build\distributions\calimero-core-%VERSION%.zip" -spe -bd -y -o"%START%source\calimero-core\build\distributions\"  > %THIS%logs\r8.%PROJECT%.log 2>&1
+call 7za x "%START%source\calimero-core\build\distributions\calimero-core-%VERSION%.zip" -spe -bd -y -o"%START%source\calimero-core\build\distributions\"
 call downpile.bat "%START%source\calimero-core\build\distributions\calimero-core-%VERSION%\lib\calimero-core-%VERSION%.jar"
 
 cd %START%
@@ -60,7 +62,7 @@ IF ERRORLEVEL 1 (
 ) ELSE echo [32m[SUCCESS][0m Downpiled calimero-device
 
 
-if not exist "%START%tmp\nrjavaserial-3.15.0.jar" wget "https://repo1.maven.org/maven2/com/neuronrobotics/nrjavaserial/3.15.0/nrjavaserial-3.15.0.jar" -O "%START%tmp\nrjavaserial-3.15.0.jar"  > log.log
+if not exist "%START%tmp\nrjavaserial-3.15.0.jar" wget --no-check-certificate -nv -O "%START%tmp\nrjavaserial-3.15.0.jar" "https://repo1.maven.org/maven2/com/neuronrobotics/nrjavaserial/3.15.0/nrjavaserial-3.15.0.jar" 
 IF ERRORLEVEL 1 (
     echo [31m[FAILURE][0m Could not get nrjavaserial
     EXIT /B 1
