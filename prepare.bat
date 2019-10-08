@@ -66,6 +66,7 @@ IF "%JAVA11_HOME%" EQU "" (
     if not exist "%START%tmp\java110\" call 7za x "%START%tmp\java110.zip" -spe -bd -y -o"%START%tmp\java110\" | %SYSTEMROOT%\system32\FIND /V "ing  "
     set JAVA11_HOME=%START%tmp\java110\jdk-11.0.4+11
     set JAVA110_HOME=%START%tmp\java110\jdk-11.0.4+11
+    echo.
 )
 IF ERRORLEVEL 1 (
     echo [31m[FAILURE][0m Could not get Java 11
@@ -77,7 +78,7 @@ IF "%jver%" NEQ "18" (
     echo.
     echo Setting Java to Version 1.8
     set JAVA_HOME=%JAVA18_HOME%
-    echo %PATH:)=^)%|%SYSTEMROOT%\system32\find /i "%JAVA_HOME%\bin">nul || set path=%JAVA_HOME%\bin;%PATH:)=^)%
+    set path=%JAVA18_HOME%\bin;%PATH:)=^)%
 ) 
 
 :: INSTALL DEPOT TOOLS FOR WINDOWS
@@ -122,7 +123,7 @@ fart "%START%tmp\r8\build.gradle" "http://storage.googleapis.com/r8-deps/maven_m
 
 
 cmd /c "exit /b 0"
-if not exist %START%tmp\r8\build\libs\d8.jar (
+if not exist %START%tmp\r8\build\libs\r8.jar (
     echo.
     echo.
     echo Building R8

@@ -1,6 +1,7 @@
 
 @echo off
 
+echo Build Calimero Project to Java 8
 
 setlocal enabledelayedexpansion
 
@@ -8,16 +9,18 @@ set START=%~dp0
 
 set VERSION=2.5-SNAPSHOT
 
-for /f tokens^=2-5^ delims^=.-_^" %%j in ('javac -fullversion 2^>^&1') do set "jver=%%j%%k"
+for /f tokens^=2-5^ delims^=.-_^" %%j in ('javac11 -fullversion 2^>^&1') do set "jver=%%j%%k"
 
 echo Found java version %jver%
 
 IF "%jver%" NEQ "110" ( 
     echo Setting Java to Version 11
     set JAVA_HOME=%JAVA11_HOME%
-    set PATH=%JAVA_HOME%\bin;%PATH%
+    set path=%JAVA11_HOME%\bin;%PATH:)=^)%
 ) 
-
+echo %JAVA_HOME%
+echo %PATH%
+javac -version
 
 ::rmdir /S /Q out
 
