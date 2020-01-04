@@ -125,6 +125,8 @@ IF ERRORLEVEL 1 (
 :: This is non destructive and sets the error level to number of replacements.
 fart "%START%tmp\r8\build.gradle" "http://storage.googleapis.com/r8-deps/maven_mirror/" "https://repo1.maven.org/maven2/" 
 
+:: we should do this
+fart "%START%tmp\r8\src\main\java\com\android\tools\r8\ir\desugar\BackportedMethodRewriter.java" "$r8$backportedMethods$utility" "r8/backportedMethods/utility"
 
 cmd /c "exit /b 0"
 if not exist %START%tmp\r8\build\libs\r8.jar (
