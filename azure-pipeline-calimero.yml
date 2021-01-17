@@ -1,5 +1,5 @@
 pool:
-  vmImage: 'win1803'
+  vmImage: 'windows-latest'
 
 container: mcr.microsoft.com/windows/servercore:1803
 
